@@ -23,16 +23,19 @@ import {
   Heading
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from '../../ColorModeSwitcher';
-import ProfilePicture from '../ProfilePicture/ProfilePicture';
+import {ProfilePicture, customProfilePicture} from '../ProfilePicture/ProfilePicture';
 
-export default function Nav() {
+export default function Nav({isLoggedIn, login}) {
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [profilePic, setProfilePic] = useState(() => ProfilePicture());
+  const [profilePic, setProfilePic] = useState('');
 
   useEffect(() => {
       console.log("useeffect called")
-  },[profilePic])
+      isLoggedIn ? 
+        setProfilePic(ProfilePicture()):
+        setProfilePic('')
+  },[isLoggedIn])
 
   return (
     <>
@@ -59,16 +62,29 @@ export default function Nav() {
                 </MenuButton>
                 <MenuList alignItems={'center'}>
                   <br />
-                  <Center p={10}>
+                  {isLoggedIn ? 
+                  <><Center p={10}>
                     <Image
                         size='2xs'
                         src={`data:image/svg+xml;utf8,${encodeURIComponent(profilePic)}`}
                         /> 
-                  </Center>
-                  <br />
-                  <Center>
-                    <p>Username</p>
-                  </Center>
+                    </Center>
+                    <br />
+                    <Center>
+                        <p>Username</p>
+                    </Center></> :
+                    <Center>
+                        <Button
+                            rounded={'full'}
+                            color='white'
+                            px={6}
+                            colorScheme={'blue'}
+                            bg={'blue.400'}
+                            _hover={{ bg: 'blue.500' }}
+                            onClick={()=>login(true)}>
+                            Login
+                        </Button>
+                    </Center>}
                   <br />
                   <MenuDivider />
                   <MenuItem>Active Quizzes</MenuItem>

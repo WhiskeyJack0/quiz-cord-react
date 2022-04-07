@@ -21,10 +21,14 @@ import CreateQuizDrawer from './components/CreateQuizDrawer/CreateQuizDrawer';
 
 function App() {
   const [showQuizDrawer, setShowQuizDrawer] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   return (
     <ChakraProvider theme={theme}>
-      <Nav />
-      <CreateQuizDrawer openDrawer={showQuizDrawer} onCloseDrawer={()=>setShowQuizDrawer(false)}/>
+      <Nav isLoggedIn={isLoggedIn} login={setIsLoggedIn}/>
+      {isLoggedIn ? 
+        <CreateQuizDrawer openDrawer={showQuizDrawer} onCloseDrawer={()=>setShowQuizDrawer(false)}/> :
+        <></>
+      }
       <Container as="main">
         <Splash setShowDrawer={setShowQuizDrawer}/>
       </Container>

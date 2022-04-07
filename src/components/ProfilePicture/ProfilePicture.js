@@ -2,7 +2,7 @@ import { createAvatar } from '@dicebear/avatars';
 import * as style from '@dicebear/pixel-art-neutral';
 
 
-const ProfilePicture = () => {
+export const ProfilePicture = () => {
     return (
         createAvatar(style)
     )
