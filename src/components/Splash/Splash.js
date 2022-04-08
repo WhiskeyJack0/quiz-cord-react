@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FaGithub } from 'react-icons/fa'
 
 import {
     Flex,
@@ -14,7 +15,6 @@ import {
   
 
   export default function Splash({setShowDrawer}) {
-    
     return (
       <>
         
@@ -51,8 +51,9 @@ import {
             </Button>
             <Button 
               color={useColorModeValue('gray.600', 'white')}
+              leftIcon={<FaGithub />}
               rounded={'full'} px={6}>
-              Learn more
+              View Source
             </Button>
           </Stack>
           <Flex w={'full'}>

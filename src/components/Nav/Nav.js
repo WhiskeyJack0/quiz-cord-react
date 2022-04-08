@@ -1,13 +1,8 @@
-import { 
-    ReactNode,
-    useState,
-    useEffect
-} from 'react';
 import {
   Box,
   Flex,
   Avatar,
-  Icon,
+  Input,
   Image,
   Button,
   Menu,
@@ -15,27 +10,24 @@ import {
   MenuList,
   MenuItem,
   MenuDivider,
-  useDisclosure,
   useColorModeValue,
   Stack,
-  useColorMode,
   Center,
-  Heading
+  Heading,
+  FormLabel,
+  InputGroup,
+  InputLeftAddon,
+  Text
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from '../../ColorModeSwitcher';
-import {ProfilePicture, customProfilePicture} from '../ProfilePicture/ProfilePicture';
 
-export default function Nav({isLoggedIn, login}) {
-  const { colorMode, toggleColorMode } = useColorMode();
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [profilePic, setProfilePic] = useState('');
-
-  useEffect(() => {
-      console.log("useeffect called")
-      isLoggedIn ? 
-        setProfilePic(ProfilePicture()):
-        setProfilePic('')
-  },[isLoggedIn])
+export default function Nav({isLoggedIn, login, username, setUsername, profilePic}) {
+    
+  function handleNameInput(event){
+      const {value} = event.target
+      console.log("handlenameinput")
+      setUsername(value)
+  }  
 
   return (
     <>
@@ -44,55 +36,56 @@ export default function Nav({isLoggedIn, login}) {
           <Box><Heading>quiz-cord</Heading></Box>
 
           <Flex alignItems={'center'}>
-            <Stack direction={'row'} spacing={7}>
             <ColorModeSwitcher justifySelf="flex-end" />
-
-              <Menu>
+            <Menu>
                 <MenuButton
-                  as={Button}
-                  rounded={'full'}
-                  variant={'link'}
-                  cursor={'pointer'}
-                  minW={0}>
-                  <Avatar
+                    as={Button}
+                    rounded={'full'}
+                    variant={'link'}
+                    cursor={'pointer'}
+                    minW={0}>
+                    <Avatar
                     size={'sm'}
                     src={`data:image/svg+xml;utf8,${encodeURIComponent(profilePic)}`}
-                  >                      
-                  </Avatar>
+                    >                      
+                    </Avatar>
                 </MenuButton>
                 <MenuList alignItems={'center'}>
-                  <br />
-                  {isLoggedIn ? 
-                  <><Center p={10}>
+                    {isLoggedIn ? 
+                    <><Center p={10}>
                     <Image
                         size='2xs'
                         src={`data:image/svg+xml;utf8,${encodeURIComponent(profilePic)}`}
                         /> 
                     </Center>
-                    <br />
                     <Center>
-                        <p>Username</p>
+                        <Text fontSize='2xl'>{username}</Text>
                     </Center></> :
-                    <Center>
-                        <Button
-                            rounded={'full'}
-                            color='white'
-                            px={6}
-                            colorScheme={'blue'}
-                            bg={'blue.400'}
-                            _hover={{ bg: 'blue.500' }}
-                            onClick={()=>login(true)}>
-                            Login
-                        </Button>
-                    </Center>}
-                  <br />
-                  <MenuDivider />
-                  <MenuItem>Active Quizzes</MenuItem>
-                  <MenuItem>Account Settings</MenuItem>
-                  <MenuItem>Logout</MenuItem>
+                    <Stack p={3} spacing='24px'>
+                        <Box>
+                            <FormLabel htmlFor='username'>Name</FormLabel>
+                            <InputGroup>
+                                <InputLeftAddon>@</InputLeftAddon>
+                                <Input
+                                id='username'
+                                value={username}
+                                placeholder='Enter a display name'
+                                onChange={(event)=>handleNameInput(event)}
+                                />
+                            </InputGroup>
+                        </Box>
+                        <Box>
+                            <Center><Button onClick={() =>login(true)} colorScheme='blue'>Login</Button></Center>
+                        </Box>
+                    </Stack>}
+                    <br />
+                    <MenuDivider />
+                    <MenuItem>Active Quizzes</MenuItem>
+                    <MenuItem onClick={() =>login(false)}>Logout</MenuItem>
+                    <MenuDivider />
+                    <MenuItem>Contact</MenuItem>
                 </MenuList>
-              </Menu>
-            </Stack>
+            </Menu>
           </Flex>
         </Flex>
       </Box>
