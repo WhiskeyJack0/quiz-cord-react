@@ -14,7 +14,17 @@ import {
   } from '@chakra-ui/react';
   
 
-  export default function Splash({setShowDrawer}) {
+  export default function Splash({setShowDrawer, isLoggedIn,setShowLoginModal, setPendingAction}) {
+    function handleClick() {
+        console.log("handleClick")
+        if(isLoggedIn){
+            setShowDrawer(true)
+        }
+        else {
+            setPendingAction({action: setShowDrawer, value: true})
+            setShowLoginModal(true)
+        }
+    } 
     return (
       <>
         
@@ -46,11 +56,12 @@ import {
               colorScheme={'blue'}
               bg={'blue.400'}
               _hover={{ bg: 'blue.500' }}
-              onClick={()=>setShowDrawer(true)}>
+              onClick={handleClick}>
               Create Quiz
             </Button>
-            <Link href='https://github.com/WhiskeyJack0/quiz-cord-react' isExternal>
-                <Button as='a'
+            <Link 
+              href='https://github.com/WhiskeyJack0/quiz-cord-react' isExternal>
+                <Button 
                 color={useColorModeValue('gray.600', 'white')}
                 leftIcon={<FaGithub />}
                 rounded={'full'} px={6}>

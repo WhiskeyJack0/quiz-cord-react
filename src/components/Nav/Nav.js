@@ -20,14 +20,9 @@ import {
   Text
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from '../../ColorModeSwitcher';
+import {LoginBox} from '../LoginBox/LoginBox';
 
 export default function Nav({isLoggedIn, login, username, setUsername, profilePic}) {
-    
-  function handleNameInput(event){
-      const {value} = event.target
-      console.log("handlenameinput")
-      setUsername(value)
-  }  
 
   return (
     <>
@@ -61,29 +56,13 @@ export default function Nav({isLoggedIn, login, username, setUsername, profilePi
                     <Center>
                         <Text fontSize='2xl'>{username}</Text>
                     </Center></> :
-                    <Stack p={3} spacing='24px'>
-                        <Box>
-                            <FormLabel htmlFor='username'>Name</FormLabel>
-                            <InputGroup>
-                                <InputLeftAddon>@</InputLeftAddon>
-                                <Input
-                                id='username'
-                                value={username}
-                                placeholder='Enter a display name'
-                                onChange={(event)=>handleNameInput(event)}
-                                />
-                            </InputGroup>
-                        </Box>
-                        <Box>
-                            <Center><Button onClick={() =>login(true)} colorScheme='blue'>Login</Button></Center>
-                        </Box>
-                    </Stack>}
+                    <LoginBox username={username} setUsername={setUsername} login={login}/>}
                     <br />
                     <MenuDivider />
-                    <MenuItem>Active Quizzes</MenuItem>
-                    <MenuItem onClick={() =>login(false)}>Logout</MenuItem>
+                    <MenuItem isDisabled={isLoggedIn? false: true}>Create a quiz (unimplemented)</MenuItem>
+                    <MenuItem isDisabled={isLoggedIn? false: true}>Active Quizzes (unimplemented)</MenuItem>
                     <MenuDivider />
-                    <MenuItem>Contact</MenuItem>
+                    <MenuItem onClick={() =>login(false)}>Logout</MenuItem>
                 </MenuList>
             </Menu>
           </Flex>
