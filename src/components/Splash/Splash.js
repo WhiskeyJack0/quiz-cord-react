@@ -10,7 +10,7 @@ import {
     Button,
     useColorModeValue,
     Icon,
-    IconProps,
+    Link,
   } from '@chakra-ui/react';
   
 
@@ -49,12 +49,15 @@ import {
               onClick={()=>setShowDrawer(true)}>
               Create Quiz
             </Button>
-            <Button 
-              color={useColorModeValue('gray.600', 'white')}
-              leftIcon={<FaGithub />}
-              rounded={'full'} px={6}>
-              View Source
-            </Button>
+            <Link href='https://github.com/WhiskeyJack0/quiz-cord-react' isExternal>
+                <Button as='a'
+                color={useColorModeValue('gray.600', 'white')}
+                leftIcon={<FaGithub />}
+                rounded={'full'} px={6}>
+                View Source
+                </Button>
+            </Link>
+            
           </Stack>
           <Flex w={'full'}>
           <Illustration
