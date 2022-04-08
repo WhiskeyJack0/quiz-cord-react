@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/quiz-cord-react/static/js/main.810f70ea.js",
+    "main.js": "/quiz-cord-react/static/js/main.db27051e.js",
     "index.html": "/quiz-cord-react/index.html",
-    "main.810f70ea.js.map": "/quiz-cord-react/static/js/main.810f70ea.js.map"
+    "main.db27051e.js.map": "/quiz-cord-react/static/js/main.db27051e.js.map"
   },
   "entrypoints": [
-    "static/js/main.810f70ea.js"
+    "static/js/main.db27051e.js"
   ]
 }
