@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Box,
     Input,
@@ -18,13 +18,19 @@ import {
     useDisclosure
   } from '@chakra-ui/react';
 
-function handleNameInput(event, setUsername){
-    const {value} = event.target
-    console.log("handlenameinput in loginbox")
-    setUsername(value)
-}  
+import { useModifyUserContext } from '../../contexts/UserContext';
 
-export function LoginBox({username, setUsername, login}) {
+
+
+export function LoginBox() {
+    const login = useModifyUserContext()
+    
+    const [username, setUsername] = useState('');
+
+    function handleNameInput(event, setUsername){
+        const {value} = event.target
+        setUsername(value)
+    }  
     return(
         <Stack p={3} spacing='24px'>
             <Box>
@@ -40,22 +46,26 @@ export function LoginBox({username, setUsername, login}) {
                 </InputGroup>
             </Box>
             <Box>
-                <Center><Button onClick={() =>login(true)} colorScheme='blue'>Login</Button></Center>
+                <Center><Button onClick={() =>login.loginUser(username)} colorScheme='blue'>Login</Button></Center>
             </Box>
         </Stack>
     )
 }
 
-export const LoginModal = ({username, setUsername, login, isModalOpen, onCloseModal}) =>{
+export const LoginModal = ({ isModalOpen, onCloseModal }) =>{
     const { isOpen, onClose } = useDisclosure({isOpen:isModalOpen, onClose:onCloseModal})
     return (
-        <Modal isOpen={isOpen} onClose={onClose} motionPreset='slideInRight' size='sm'>
+        <Modal 
+          isOpen={isOpen} 
+          onClose={onClose} 
+          motionPreset='slideInRight' 
+          size='sm'>
             <ModalOverlay />
             <ModalContent>
             <ModalHeader>Login to continue</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-                <LoginBox username={username} setUsername={setUsername} login={login}/>
+                <LoginBox />
             </ModalBody>
 
             <ModalFooter>

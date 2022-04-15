@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaGithub } from 'react-icons/fa'
 
 import {
@@ -13,18 +13,29 @@ import {
     Link,
   } from '@chakra-ui/react';
   
+  import { useUserContext, } from '../../contexts/UserContext';
 
-  export default function Splash({setShowDrawer, isLoggedIn,setShowLoginModal, setPendingAction}) {
+  export default function Splash({ setShowDrawer, setShowLoginModal }) {
+    const userProfile = useUserContext()
+    const [createQuiz, setCreateQuiz] = useState(false);
     function handleClick() {
-        console.log("handleClick")
-        if(isLoggedIn){
+        setCreateQuiz(true)
+        console.log("handleClick ", userProfile );
+        if(userProfile.isLoggedIn){
             setShowDrawer(true)
         }
         else {
-            setPendingAction({action: setShowDrawer, value: true})
             setShowLoginModal(true)
+            
         }
     } 
+    useEffect(() => {
+      if(createQuiz) {
+        setShowLoginModal(false)
+        setShowDrawer(true)
+      }
+    }, [userProfile.isLoggedIn]);
+    
     return (
       <>
         

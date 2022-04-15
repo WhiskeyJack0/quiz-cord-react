@@ -1,9 +1,11 @@
+import React from 'react';
+
 import {
   Box,
   Flex,
   Avatar,
-  Input,
   Image,
+  IconButton,
   Button,
   Menu,
   MenuButton,
@@ -11,19 +13,19 @@ import {
   MenuItem,
   MenuDivider,
   useColorModeValue,
-  Stack,
   Center,
   Heading,
-  FormLabel,
-  InputGroup,
-  InputLeftAddon,
-  Text
+  Text,
 } from '@chakra-ui/react';
+import { FaSyncAlt } from 'react-icons/fa'
+
 import { ColorModeSwitcher } from '../../ColorModeSwitcher';
-import {LoginBox} from '../LoginBox/LoginBox';
+import { LoginBox } from '../LoginBox/LoginBox';
+import { useUserContext,useModifyUserContext } from '../../contexts/UserContext';
 
-export default function Nav({isLoggedIn, login, username, setUsername, profilePic}) {
-
+export default function Nav() {
+  const userProfile = useUserContext()
+  const loginContext = useModifyUserContext()
   return (
     <>
       <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
@@ -41,28 +43,39 @@ export default function Nav({isLoggedIn, login, username, setUsername, profilePi
                     minW={0}>
                     <Avatar
                     size={'sm'}
-                    src={`data:image/svg+xml;utf8,${encodeURIComponent(profilePic)}`}
+                    src={`data:image/svg+xml;utf8,${encodeURIComponent(userProfile.profilePic)}`}
                     >                      
                     </Avatar>
                 </MenuButton>
                 <MenuList alignItems={'center'}>
-                    {isLoggedIn ? 
+                    {userProfile.isLoggedIn ? 
                     <><Center p={10}>
-                    <Image
+                      <Image
+                        
                         size='2xs'
-                        src={`data:image/svg+xml;utf8,${encodeURIComponent(profilePic)}`}
-                        /> 
-                    </Center>
+                        src={`data:image/svg+xml;utf8,${encodeURIComponent(userProfile.profilePic)}`}
+                        />
+                      <Box pos="fixed" right="2" zIndex={2}>
+                            <IconButton
+                              variant="ghost"
+                              isRound={true}
+                              aria-label="Change Avatar"
+                              fontSize="20px"
+                              onClick={() =>loginContext.updateProfilePicture()}
+                              icon={<FaSyncAlt />}
+                            />
+                          </Box>
+                    </Center> 
                     <Center>
-                        <Text fontSize='2xl'>{username}</Text>
+                        <Text fontSize='2xl'>{userProfile.username}</Text>
                     </Center></> :
-                    <LoginBox username={username} setUsername={setUsername} login={login}/>}
+                    <LoginBox />}
                     <br />
                     <MenuDivider />
-                    <MenuItem isDisabled={isLoggedIn? false: true}>Create a quiz (unimplemented)</MenuItem>
-                    <MenuItem isDisabled={isLoggedIn? false: true}>Active Quizzes (unimplemented)</MenuItem>
+                    <MenuItem isDisabled={userProfile.isLoggedIn? false: true}>Create a quiz (unimplemented)</MenuItem>
+                    <MenuItem isDisabled={userProfile.isLoggedIn? false: true}>Active Quizzes (unimplemented)</MenuItem>
                     <MenuDivider />
-                    <MenuItem onClick={() =>login(false)}>Logout</MenuItem>
+                    <MenuItem onClick={() =>loginContext.logout()}>Logout</MenuItem>
                 </MenuList>
             </Menu>
           </Flex>
