@@ -32,7 +32,7 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": ["react-app", "prettier"]
   },
   "browserslist": {
     "production": [
@@ -47,6 +47,8 @@
     ]
   },
   "devDependencies": {
-    "@svgr/core": "^6.2.1"
+    "eslint": "^8.13.0",
+    "eslint-config-prettier": "^8.5.0",
+    "prettier": "2.6.2"
   }
 }

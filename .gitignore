@@ -18,7 +18,11 @@
 .env.test.local
 .env.production.local
 scratch.txt
+package-lock-backup.json
+.prettierignore
 
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+

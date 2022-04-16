@@ -1,100 +1,114 @@
 import React, { useState, useEffect } from 'react';
-import { FaGithub } from 'react-icons/fa'
+import { FaGithub } from 'react-icons/fa';
 
 import {
-    Flex,
-    Container,
-    Heading,
-    Stack,
-    Text,
-    Button,
-    useColorModeValue,
-    Icon,
-    Link,
-  } from '@chakra-ui/react';
-  
-  import { useUserContext, } from '../../contexts/UserContext';
+  Flex,
+  Container,
+  Heading,
+  Stack,
+  Text,
+  Button,
+  useColorModeValue,
+  Icon,
+  Link,
+} from '@chakra-ui/react';
 
-  export default function Splash({ setShowDrawer, setShowLoginModal }) {
-    const userProfile = useUserContext()
-    const [createQuiz, setCreateQuiz] = useState(false);
-    function handleClick() {
-        setCreateQuiz(true)
-        console.log("handleClick ", userProfile );
-        if(userProfile.isLoggedIn){
-            setShowDrawer(true)
-        }
-        else {
-            setShowLoginModal(true)
-            
-        }
-    } 
-    useEffect(() => {
-      if(createQuiz) {
-        setShowLoginModal(false)
-        setShowDrawer(true)
-      }
-    }, [userProfile.isLoggedIn]);
-    
-    return (
-      <>
-        
-        <Container maxW={'5xl'} centerContent>
+import { useUserContext } from '../../contexts/UserContext';
+
+export default function Splash({
+  showDrawer,
+  setShowDrawer,
+  showLoginModal,
+  setShowLoginModal,
+}) {
+  const userProfile = useUserContext();
+  const [createQuiz, setCreateQuiz] = useState(showDrawer);
+  function handleClick() {
+    console.log('handleClick ', userProfile);
+    if (userProfile.isLoggedIn) {
+      setShowDrawer(true);
+    } else {
+      setCreateQuiz(true);
+      setShowLoginModal(true);
+    }
+  }
+  useEffect(() => {
+    // Run the pending create-quiz action after the user has logged in.
+    if (userProfile.isLoggedIn && createQuiz) {
+      setShowLoginModal(false);
+      setShowDrawer(true);
+      setCreateQuiz(false);
+    }
+  }, [userProfile.isLoggedIn]);
+
+  useEffect(() => {
+    // Handle a case where user clicks on create quiz but cancels login. Clear the pending create-quiz action
+    if (createQuiz && !showLoginModal) {
+      setCreateQuiz(false);
+    }
+  }, [createQuiz, showLoginModal]);
+
+  return (
+    <>
+      <Container maxW={'5xl'} centerContent>
         <Stack
           textAlign={'center'}
           align={'center'}
           spacing={{ base: 8, md: 10 }}
-          py={{ base: 20, md: 28 }}>
+          py={{ base: 20, md: 28 }}
+        >
           <Heading
             color={useColorModeValue('gray.600', 'white')}
             fontWeight={600}
             fontSize={{ base: '3xl', sm: '4xl', md: '6xl' }}
-            lineHeight={'110%'}>
-            Quizzing online{' '}<br/>
+            lineHeight={'110%'}
+          >
+            Quizzing online <br />
             <Text as={'span'} color={'blue.400'}>
               made easy
             </Text>
           </Heading>
           <Text color={'gray.500'} maxW={'3xl'}>
-            No more screen sharing shenanigans. Create a quiz, share the link 
+            No more screen sharing shenanigans. Create a quiz, share the link
             and get started.
           </Text>
           <Stack spacing={6} direction={'row'}>
             <Button
               rounded={'full'}
-              color='white'
+              color="white"
               px={6}
               colorScheme={'blue'}
               bg={'blue.400'}
               _hover={{ bg: 'blue.500' }}
-              onClick={handleClick}>
+              onClick={handleClick}
+            >
               Create Quiz
             </Button>
-            <Link 
-              href='https://github.com/WhiskeyJack0/quiz-cord-react' isExternal>
-                <Button 
+            <Link
+              href="https://github.com/WhiskeyJack0/quiz-cord-react"
+              isExternal
+            >
+              <Button
                 color={useColorModeValue('gray.600', 'white')}
                 leftIcon={<FaGithub />}
-                rounded={'full'} px={6}>
+                rounded={'full'}
+                px={6}
+              >
                 View Source
-                </Button>
+              </Button>
             </Link>
-            
           </Stack>
           <Flex w={'full'}>
-          <Illustration
-            height={{ sm: '24rem', lg: '28rem' }}
-            
-          />
+            <Illustration height={{ sm: '24rem', lg: '28rem' }} />
           </Flex>
         </Stack>
       </Container>
-      </>
-    );
-  }
+    </>
+  );
+}
 
-
-  export const Illustration = (props) =>{ return (
+export const Illustration = props => {
+  return (
     <Icon
       xmlns="http://www.w3.org/2000/svg"
       width="865.76"
@@ -468,4 +482,4 @@ import {
       ></path>
     </Icon>
   );
-}
+};

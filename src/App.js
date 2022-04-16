@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
 
-import {
-  ChakraProvider,
-  theme,
-  Container
-} from '@chakra-ui/react';
+import { ChakraProvider, theme, Container } from '@chakra-ui/react';
 
 import Nav from './components/Nav/Nav';
 import Splash from './components/Splash/Splash';
 import CreateQuizDrawer from './components/CreateQuizDrawer/CreateQuizDrawer';
-import { LoginModal } from './components/LoginBox/LoginBox'
-import { UserProvider } from './contexts/UserContext'
+import { LoginModal } from './components/LoginBox/LoginBox';
+import { UserProvider } from './contexts/UserContext';
 
 function App() {
   const [showQuizDrawer, setShowQuizDrawer] = useState(false);
@@ -19,23 +15,27 @@ function App() {
     <>
       <UserProvider>
         <ChakraProvider theme={theme}>
-          <Nav/>
-          <CreateQuizDrawer 
-            openDrawer={showQuizDrawer} 
-            onCloseDrawer={()=>setShowQuizDrawer(false)}/>
-          <LoginModal 
-            isModalOpen={showLoginModal} 
-            onCloseModal={() => setShowLoginModal(false)}/>
+          <Nav />
+          <CreateQuizDrawer
+            openDrawer={showQuizDrawer}
+            onCloseDrawer={() => setShowQuizDrawer(false)}
+          />
+          <LoginModal
+            isModalOpen={showLoginModal}
+            onCloseModal={() => setShowLoginModal(false)}
+          />
           <Container as="main">
-            <Splash 
-            setShowDrawer={setShowQuizDrawer} 
-            setShowLoginModal={setShowLoginModal} />
+            <Splash
+              showDrawer={showQuizDrawer}
+              setShowDrawer={setShowQuizDrawer}
+              showLoginModal={showLoginModal}
+              setShowLoginModal={setShowLoginModal}
+            />
           </Container>
         </ChakraProvider>
       </UserProvider>
     </>
-  )
-
+  );
 }
 
 export default App;
