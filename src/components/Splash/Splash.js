@@ -39,6 +39,7 @@ export default function Splash({
       setShowDrawer(true);
       setCreateQuiz(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userProfile.isLoggedIn]);
 
   useEffect(() => {

@@ -18,6 +18,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { FaSyncAlt } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 import { ColorModeSwitcher } from '../../ColorModeSwitcher';
 import { LoginBox } from '../LoginBox/LoginBox';
@@ -34,9 +35,15 @@ export default function Nav() {
       <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <Box>
-            <Heading>quiz-cord</Heading>
+            <Heading>
+              <Link to="/">quiz-cord</Link>
+            </Heading>
           </Box>
-
+          <Box>
+            <Heading>
+              <Link to="/quiz">Quiz</Link>
+            </Heading>
+          </Box>
           <Flex alignItems={'center'}>
             <ColorModeSwitcher justifySelf="flex-end" />
             <Menu>
