@@ -24,7 +24,6 @@ export default function Splash({
   const userProfile = useUserContext();
   const [createQuiz, setCreateQuiz] = useState(showDrawer);
   function handleClick() {
-    console.log('handleClick ', userProfile);
     if (userProfile.isLoggedIn) {
       setShowDrawer(true);
     } else {

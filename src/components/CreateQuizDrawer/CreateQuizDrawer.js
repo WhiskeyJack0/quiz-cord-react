@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'
 
 import {
   useDisclosure,
@@ -30,6 +31,7 @@ export default function CreateQuizDrawer({ openDrawer, onCloseDrawer }) {
   const firstField = React.useRef();
   const [formData, setFormData] = useState({});
   const [submitForm, setSubmitForm] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = event => {
     const name = event.target.name;
@@ -46,11 +48,12 @@ export default function CreateQuizDrawer({ openDrawer, onCloseDrawer }) {
       const getSlideData = async () => {
         let res = await makeAPICall(pID);
         console.log('API response : ', res);
+        navigate('/quiz')
       };
       getSlideData();
       setSubmitForm(false);
     }
-  }, [submitForm, formData.url]);
+  }, [submitForm, formData.url, navigate]);
 
   return (
     <>

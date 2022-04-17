@@ -55,5 +55,6 @@
     "eslint-config-prettier": "^8.5.0",
     "prettier": "2.6.2",
     "react-router-dom": "^6.3.0"
-  }
+  },
+  "proxy": "http://localhost:4000"
 }

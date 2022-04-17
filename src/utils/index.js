@@ -15,7 +15,7 @@ export function makeAPICall(id = '') {
   });
   var config = {
     method: 'post',
-    url: 'http://localhost:4000',
+    url: '/getslides',
     headers: {
       'Content-Type': 'application/json',
     },
