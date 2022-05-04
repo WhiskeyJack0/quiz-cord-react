@@ -20,7 +20,7 @@ import {
 
 import { useModifyUserContext } from '../../contexts/UserContext';
 
-export function LoginBox() {
+export function LoginBox({ onClose }) {
   const login = useModifyUserContext();
 
   const [username, setUsername] = useState('');
@@ -45,7 +45,9 @@ export function LoginBox() {
       </Box>
       <Box>
         <Center>
-          <Button onClick={() => login.loginUser(username)}>Login</Button>
+          <Button onClick={() => {
+            login.loginUser(username);
+            onClose();}}>Login</Button>
         </Center>
       </Box>
     </Stack>
@@ -69,7 +71,7 @@ export const LoginModal = ({ isModalOpen, onCloseModal }) => {
         <ModalHeader>Login to continue</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <LoginBox />
+          <LoginBox onClose={onClose}/>
         </ModalBody>
 
         <ModalFooter>
